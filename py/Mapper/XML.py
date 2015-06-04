@@ -52,8 +52,7 @@ class MapOrganism(General):
         }[symbol]
 
     # Odczyt z XMLa
-    def deserialize(self, org_xml):
-        org = BeautifulSoup(org_xml, features="xml").organism
+    def deserialize(self, org):
 
         pos = (int(org.get('pos_x')), int(org.get('pos_y')))
         try:
@@ -93,7 +92,7 @@ class MapWorld(General):
         try:
             world_xml = BeautifulSoup(world_xml, features="xml").world
             res_world = World(random.randint)
-            res_world.setN(world_xml.get('size'))
+            res_world.setN(int(world_xml.get('size')))
             org_mapper = MapOrganism()
             for org in world_xml.findAll('organism'):
                 tmp = org_mapper.deserialize(org)

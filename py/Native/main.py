@@ -186,6 +186,7 @@ class Main(QtGui.QWidget, Controller):
                 if tmp is not None:
                     tmp._controller = self
                     self._world = tmp
+                    self.start_game()
         except (OSError, IOError):
             print("Nie można wczytać pliku")
 
