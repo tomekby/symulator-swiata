@@ -182,7 +182,10 @@ class Main(QtGui.QWidget, Controller):
         try:
             with open('world.xml', 'r') as file:
                 map_world = MapWorld()
-                self._world = map_world.deserialize(file.read())
+                tmp = map_world.deserialize(file.read())
+                if tmp is not None:
+                    tmp._controller = self
+                    self._world = tmp
         except (OSError, IOError):
             print("Nie można wczytać pliku")
 
