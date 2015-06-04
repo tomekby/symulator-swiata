@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<form xmlns="http://www.intellij.com/uidesigner/form/" version="1" bind-to-class="main">
+  <grid id="27dc6" binding="panel1" default-binding="true" layout-manager="GridLayoutManager" row-count="2" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+    <margin top="0" left="0" bottom="0" right="0"/>
+    <constraints>
+      <xy x="20" y="20" width="459" height="71"/>
+    </constraints>
+    <properties/>
+    <border type="none"/>
+    <children>
+      <toolbar id="f6f6a">
+        <constraints>
+          <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="0" fill="1" indent="0" use-parent-layout="false">
+            <preferred-size width="-1" height="20"/>
+          </grid>
+        </constraints>
+        <properties>
+          <floatable value="false"/>
+        </properties>
+        <border type="none"/>
+        <children>
+          <component id="6264" class="javax.swing.JButton" binding="startButton" default-binding="true">
+            <constraints/>
+            <properties>
+              <text value="Start"/>
+            </properties>
+          </component>
+          <component id="7d8a0" class="javax.swing.JButton" binding="nastepnaRundaButton">
+            <constraints/>
+            <properties>
+              <enabled value="false"/>
+              <hideActionText value="false"/>
+              <text value="Następna runda"/>
+            </properties>
+          </component>
+          <component id="7318b" class="javax.swing.JButton" binding="zapiszStanButton" default-binding="true">
+            <constraints/>
+            <properties>
+              <enabled value="false"/>
+              <text value="Zapisz stan"/>
+            </properties>
+          </component>
+          <component id="84530" class="javax.swing.JButton" binding="wczytajStanButton" default-binding="true">
+            <constraints/>
+            <properties>
+              <text value="Wczytaj stan"/>
+            </properties>
+          </component>
+          <component id="4662" class="javax.swing.JButton" binding="aboutButton" default-binding="true">
+            <constraints/>
+            <properties>
+              <text value="About"/>
+            </properties>
+          </component>
+        </children>
+      </toolbar>
+      <grid id="783b5" layout-manager="BorderLayout" hgap="0" vgap="0">
+        <constraints>
+          <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="1" hsize-policy="1" anchor="9" fill="0" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties/>
+        <border type="none"/>
+        <children>
+          <grid id="c6ddd" binding="panel2" custom-create="true" layout-manager="BorderLayout" hgap="0" vgap="0">
+            <constraints border-constraint="West"/>
+            <properties/>
+            <border type="none"/>
+            <children/>
+          </grid>
+          <grid id="73df" binding="panel3" custom-create="true" layout-manager="BorderLayout" hgap="0" vgap="0">
+            <constraints border-constraint="Center"/>
+            <properties/>
+            <border type="none"/>
+            <children/>
+          </grid>
+        </children>
+      </grid>
+    </children>
+  </grid>
+</form>
