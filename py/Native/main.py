@@ -1,7 +1,7 @@
 import random
 from PySide import QtCore, QtGui
 from PySide.QtCore import Qt, QObject, SIGNAL, SLOT
-import jsonpickle
+from Mapper.XML import MapWorld
 from Misc import Controller
 from World.Animal import Directions
 from World.Antelope import Antelope
@@ -98,7 +98,6 @@ class GameBoard(QtGui.QWidget):
             x, y, color = point
             qp.setBrush(color)
             qp.drawRect(self._start_x + 29*x, self._start_y + 29*y, 29, 29)
-        # self._draw_at.clear()
 
     # Funkcja kolejkująca coś do narysowania
     def draw_at(self, x, y, color):
@@ -171,31 +170,35 @@ class Main(QtGui.QWidget, Controller):
 
     # Zapis stanu gry
     def save_game(self):
+        world_mapper = MapWorld()
         try:
-            with open('world.json', 'w+') as world_file:
-                world_file.write(jsonpickle.encode(self._world))
+            with open('world.xml', 'w+') as file:
+                file.write(world_mapper.serialize(self._world))
         except (OSError, IOError):
             print("Nie można zapisać pliku")
-
-    def reset_map(self):
-        self._game_board._should_redraw = True
-        self._game_board._draw_at.clear()
 
     # Wczytywanie stanu gry
     def load_game(self):
         try:
-            with open('world.json', 'r') as world_file:
-                self._world = jsonpickle.decode(world_file.read())
+            with open('world.xml', 'r') as file:
+                map_world = MapWorld()
+                self._world = map_world.deserialize(file.read())
         except (OSError, IOError):
-            print("Nie można zapisać pliku")
+            print("Nie można wczytać pliku")
 
+    # Losowa inicjalizacja organizmami
     def _init_org(self, count, org_type, rand):
         for i in range(count):
             x, y = rand(0, self._world.getN()), rand(0, self._world.getN())
-            new_org = org_type((x, y))
-            self._world.add_organism(new_org)
+            if self._world.is_free((x, y)):
+                new_org = org_type((x, y))
+                self._world.add_organism(new_org)
 
     # Metody kontrolera
+    def reset_map(self):
+        self._game_board._should_redraw = True
+        self._game_board._draw_at.clear()
+
     # Wypisywanie informacji
     def print_info(self, text):
         self._info_panel.addWidget(QtGui.QLabel(text))

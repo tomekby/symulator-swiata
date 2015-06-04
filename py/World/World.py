@@ -1,4 +1,4 @@
-from Misc import Controller
+from Misc import Controller, CantSpawnException
 
 
 class World(object):
@@ -22,7 +22,7 @@ class World(object):
                 if self._organisms[j].pos() == self._organisms[i].pos() and self._organisms[j] != self._organisms[i]:
                     try:
                         self._organisms[i].collision_default(self._organisms[j])
-                    except NotImplementedError:
+                    except CantSpawnException:
                         print("Błąd podczas kolizji")
         # Kasowanie niepotrzebnych + rysowanie świata
         self._remove_pending()

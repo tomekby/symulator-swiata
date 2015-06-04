@@ -45,10 +45,19 @@ class Controller(object):
             'L': '#B84E2E',
             'C': '#66DBED',
             'O': '#C8C8C8',
-            'Ż': '#0B3B08',
+            'Z': '#0B3B08',
             'W': '#505050',
             'j': '#2314C9',
             'm': '#FF0',
             't': '#0F0',
             'g': '#F00',
         }.get(text, '#000')
+
+# Własne wyjątki
+# Nie można stworzyć nowego organizmu
+class CantSpawnException(Exception):
+    pass
+
+# Nie można wykonać ruchu
+class CantMoveException(Exception):
+    pass

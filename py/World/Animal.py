@@ -1,4 +1,5 @@
 import abc
+from Misc import CantSpawnException, CantMoveException
 from World.Organism import Organism
 from enum import Enum
 
@@ -61,7 +62,7 @@ class Animal(Organism):
                 3: lambda: self._move_x(Directions.RIGHT)
             }
             res[self._world._rand(0, 3)]()
-        except NotImplementedError:
+        except CantMoveException:
             print("Nie można wykonać ruchu")
 
         super(Animal, self).action()
@@ -86,8 +87,7 @@ class Animal(Organism):
             elif self._world.is_free((x, y + 1)):
                 self._spawn_new((x, y + 1))
             else:
-                # @todo: własny wyjątek
-                raise NotImplementedError
+                raise CantSpawnException
             self._world.add_event(self.get_name() + " się rozmnaża")
         else:
             try:

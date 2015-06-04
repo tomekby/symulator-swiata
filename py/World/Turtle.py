@@ -8,7 +8,7 @@ class Turtle(Animal):
 
     # Inicjalizacja
     def _init(self):
-        self._SYMBOL = 'Ż'
+        self._SYMBOL = 'Z'
         self._strength = 2
         self._initiative = 1
 

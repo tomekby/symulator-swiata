@@ -1,3 +1,4 @@
+from Misc import CantMoveException
 from World.Animal import *
 
 
@@ -23,7 +24,7 @@ class Fox(Animal):
         elif self._world.is_free((x, y - int(d))):
             super(Fox, self)._move_y(Directions.BOTTOM)
         else:
-            raise NotImplementedError
+            raise CantMoveException
 
     # Ruch w pionie
     def _move_y(self, d: Directions):
@@ -37,4 +38,4 @@ class Fox(Animal):
         elif self._world.is_free((x + 1, y)):
             super(Fox, self)._move_x(Directions.RIGHT)
         else:
-            raise NotImplementedError
+            raise CantMoveException
