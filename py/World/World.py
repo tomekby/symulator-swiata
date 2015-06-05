@@ -53,7 +53,6 @@ class World(object):
         if x < 0 or x >= self._N or y < 0 or y >= self._N:
             return False
 
-        # @todo: functional programming?
         for o in self._organisms:
             if o.pos() == pos:
                 return False

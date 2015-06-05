@@ -18,10 +18,10 @@ class Fox(Animal):
         if self._world.is_free((x + int(d), y)):
             super(Fox, self)._move_x(d)
         elif self._world.is_free((x - int(d), y)):
-            super(Fox, self)._move_x(-d)
-        elif self._world.is_free((x, y + int(d))):
+            super(Fox, self)._move_x(Directions.LEFT if d is Directions.RIGHT else Directions.RIGHT)
+        elif self._world.is_free((x, y + int(Directions.TOP))):
             super(Fox, self)._move_y(Directions.TOP)
-        elif self._world.is_free((x, y - int(d))):
+        elif self._world.is_free((x, y - int(Directions.BOTTOM))):
             super(Fox, self)._move_y(Directions.BOTTOM)
         else:
             raise CantMoveException
@@ -29,13 +29,13 @@ class Fox(Animal):
     # Ruch w pionie
     def _move_y(self, d: Directions):
         x, y = self._position
-        if self._world.is_free((x, y + d)):
+        if self._world.is_free((x, y + int(d))):
             super(Fox, self)._move_y(d)
-        elif self._world.is_free((x, y - d)):
-            super(Fox, self)._move_y(-d)
-        elif self._world.is_free((x - 1, y)):
+        elif self._world.is_free((x, y - int(d))):
+            super(Fox, self)._move_y(Directions.BOTTOM if d is Directions.TOP else Directions.TOP)
+        elif self._world.is_free((x - int(Directions.LEFT), y)):
             super(Fox, self)._move_x(Directions.LEFT)
-        elif self._world.is_free((x + 1, y)):
+        elif self._world.is_free((x + int(Directions.RIGHT), y)):
             super(Fox, self)._move_x(Directions.RIGHT)
         else:
             raise CantMoveException

@@ -215,7 +215,7 @@ class Main(QtGui.QWidget, Controller):
     # Wypisanie czegoś
     def print(self, xy, text):
         x, y = xy
-        self._game_board.draw_at(x, y, QtGui.QColor(self._map_to_color(text)))
+        self._game_board.draw_at(x, y, QtGui.QColor(self.map_to_color(text)))
         self._game_board.update()
 
     # Wczytywanie znaku/komendy etc.

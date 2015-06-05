@@ -39,7 +39,8 @@ class Controller(object):
         """
 
     # Mapowanie reprezentacji organizmu na kolor
-    def _map_to_color(self, text):
+    @staticmethod
+    def map_to_color(text):
         return {
             'A': '#A3872A',
             'L': '#B84E2E',
