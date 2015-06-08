@@ -11,7 +11,6 @@ class Directions(Enum):
     SPECIAL = 0xDEADBEEF
 
     def __int__(self):
-        print(self.value)
         return {
             0: -1, 1: 1,
             2: -1, 3: 1

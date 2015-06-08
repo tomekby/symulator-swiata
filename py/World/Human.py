@@ -15,16 +15,6 @@ class Human(Animal):
         self._strength = 5
         self._initiative = 4
 
-    # Ruch w poziomie
-    def _move_x(self, d: Directions):
-        self._ability()
-        super(Human, self)._move_x(d)
-
-    # Ruch w pionie
-    def _move_y(self, d: Directions):
-        self._ability()
-        super(Human, self)._move_y(d)
-
     # Uwzględnianie działania umiejętności specjalnej
     def _ability(self):
         if self._bonus_left == 0:
@@ -42,15 +32,17 @@ class Human(Animal):
                 self._bonus_left = 5
             move = self._world.get_controller().read_char()
 
+        self._ability()
         if move is Directions.TOP or move is Directions.BOTTOM:
             self._move_y(move)
         elif move is Directions.LEFT or move is Directions.RIGHT:
             self._move_x(move)
 
-        if self._bonus_left > 0:
+        if self._bonus_left == 1:
+            self._before_next_bonus = 6
+            self._bonus_left = 0
+        elif self._bonus_left > 0:
             self._bonus_left -= 1
-        if self._bonus_left == 0 and self._before_next_bonus == 0:
-            self._before_next_bonus = 5
         elif self._bonus_left == 0 and self._before_next_bonus > 0:
             self._before_next_bonus -= 1
 

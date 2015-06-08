@@ -77,6 +77,7 @@ class GameBoard(QtGui.QWidget):
         w, h = 600 + start_x, 600 + start_y
         self._start_x, self._start_y = start_x, start_y
         self.setFixedSize(w, h)
+        self._parent = parent
 
     # Redraw
     def paintEvent(self, e):
@@ -87,17 +88,55 @@ class GameBoard(QtGui.QWidget):
 
         self._should_redraw = False
 
+    # Dodawanie organizmu
+    def mouseReleaseEvent(self, evt):
+        x, y = (evt.x() - self._start_x) / Main.field_width, (evt.y() - self._start_y) / Main.field_width
+        if self._parent._world.is_free((x, y)):
+            dlg = QtGui.QDialog()
+            layout = QtGui.QVBoxLayout(dlg)
+            dlg.setModal(True)
+            new_org = None
+
+            # Tworzenie comboboxa z wyborem
+            class Combo(QtGui.QComboBox):
+                def __init__(self):
+                    super().__init__()
+                    options = ["Antylopa", "Lis", "Owca", "Żółw", "Wilk", "Człowiek", "Wilcze jagody", "Mlecz", "Trawa",
+                               "Guarana"]
+                    for opt in options:
+                        self.addItem(opt)
+
+                @staticmethod
+                def create(id):
+                    org_types = [Antelope, Fox, Sheep, Turtle, Wolf, Human, Belladonna, Dandelion, Grass, Guarana]
+                    if id < len(org_types):
+                        new_org = org_types[id]((x, y))
+                    dlg.close()
+            combo = Combo()
+            combo.activated[int].connect(Combo.create)
+            layout.addWidget(combo)
+            dlg.setLayout(layout)
+            dlg.exec_()
+
+            # Jeśli jest wybrany prawidłowy organizm
+            if new_org is not None:
+                self._parent._world.add_organism(new_org)
+                self._parent._world.add_pending()
+                self._parent._world.draw_world()
+
     # Funkcja odpowiedzialna za odrysowanie planszy
     def draw(self, qp):
         qp.setBrush(QtGui.QColor("#fff"))
         for i in range(20):
             for j in range(20):
-                qp.drawRect(self._start_x + 29*i, self._start_y + 29*j, 29, 29)
+                qp.drawRect(self._start_x + Main.field_width*i, self._start_y + Main.field_width*j, Main.field_width,
+                            Main.field_width)
 
         for point in self._draw_at:
             x, y, color = point
             qp.setBrush(color)
-            qp.drawRect(self._start_x + 29*x, self._start_y + 29*y, 29, 29)
+            qp.drawRect(self._start_x + Main.field_width*x, self._start_y + Main.field_width*y, Main.field_width,
+                        Main.field_width)
 
     # Funkcja kolejkująca coś do narysowania
     def draw_at(self, x, y, color):
@@ -114,10 +153,10 @@ class Main(QtGui.QWidget, Controller):
         self._world = World(random.randint, self)
         self._world.setN(20)
         # Dodawanie organizmów
+        self._world.add_organism(Human((10, 10)))
         org_types = [Antelope, Fox, Sheep, Turtle, Wolf, Belladonna, Dandelion, Grass, Guarana]
         for org_type in org_types:
-            self._init_org(10, org_type, random.randint)
-        self._world.add_organism(Human((10, 10)))
+            self._init_org(5, org_type, random.randint)
         self._world.add_pending()
 
         # GUI
@@ -232,3 +271,4 @@ class Main(QtGui.QWidget, Controller):
     _info_panel = QtGui.QVBoxLayout
     _res_key = 0xDEADC0DE
     _world = World
+    field_width = 29

@@ -23,7 +23,7 @@ class World(object):
                     try:
                         self._organisms[i].collision_default(self._organisms[j])
                     except CantSpawnException:
-                        print("Błąd podczas kolizji")
+                        print("Nie można utworzyć organizmu")
         # Kasowanie niepotrzebnych + rysowanie świata
         self._remove_pending()
         self.draw_world()
